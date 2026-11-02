@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoValuate ML | Used Car Price Prediction</title>
+    <meta name="description" content="Predict realistic resale prices for used cars across India using Random Forest Machine Learning.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="brand-logo" id="navBrandLogo">
+                <div class="brand-icon">⚡</div>
+                <div class="brand-title">Auto<span>Valuate</span> ML</div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}" class="nav-link active" id="navHome">Predictor</a></li>
+                <li><a href="{{ url_for('dashboard') }}" class="nav-link" id="navDashboard">Analytics Dashboard</a></li>
+                <li><a href="{{ url_for('about') }}" class="nav-link" id="navAbout">Architecture & Viva</a></li>
+                <li><span class="badge-tag">B.Tech ML Project</span></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-pill">
+                <span class="dot"></span>
+                <span>Production Random Forest ML Pipeline</span>
+                <span class="badge-tag">Scikit-Learn</span>
+            </div>
+            <h1 class="hero-title">
+                Accurate Used Car <span class="highlight">Price Prediction</span>
+            </h1>
+            <p class="hero-subtitle">
+                Estimate fair Indian automotive market resale prices using a validated Machine Learning Regressor trained on 11 mechanical, temporal, and historical factors.
+            </p>
+
+            <div class="hero-metrics-strip">
+                <div class="strip-item">
+                    <span>Algorithm:</span> <strong>RandomForestRegressor</strong>
+                </div>
+                <div class="strip-item">
+                    <span>Model R² Score:</span> <strong>{{ "%.2f"|format(metrics.r2_score * 100) if metrics.r2_score else "75.11" }}%</strong>
+                </div>
+                <div class="strip-item">
+                    <span>Mean Absolute Error:</span> <strong>₹ {{ "{:,.0f}".format(metrics.mae) if metrics.mae else "1,87,290" }}</strong>
+                </div>
+                <div class="strip-item">
+                    <span>Currency:</span> <strong>Indian Rupee (₹)</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prediction Grid -->
+        <div class="prediction-grid">
+            <!-- Left Column: Input Form -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">
+                            <span>🚗</span> Vehicle Specifications
+                        </div>
+                        <p class="card-subtitle">
+                            Enter the vehicle's parameters below or select a quick testing preset.
+                        </p>
+                    </div>
+                    {% if model_loaded %}
+                    <span class="badge-tag" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">
+                        ● Model Loaded
+                    </span>
+                    {% else %}
+                    <span class="badge-tag" style="background: rgba(239, 68, 68, 0.2); color: #f87171;">
+                        ▲ Model Offline
+                    </span>
+                    {% endif %}
+                </div>
+
+                <!-- 1-Click Testing Presets -->
+                <div class="presets-bar">
+                    <span class="presets-label">Quick Presets:</span>
+                    <button type="button" class="preset-btn" data-preset="budget" id="presetBudget">
+                        🚗 Maruti Swift
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="suv" id="presetSuv">
+                        🚙 Hyundai Creta
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="sedan" id="presetSedan">
+                        🚘 Honda City AT
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="luxury" id="presetLuxury">
+                        🏎️ BMW 3 Series
+                    </button>
+                </div>
+
+                <!-- Error Box (Client / Server) -->
+                <div id="clientErrorBox" class="alert alert-danger" {% if not error %}style="display: none;"{% endif %}>
+                    {{ error if error else "" }}
+                </div>
+
+                <!-- Prediction Form -->
+                <form id="carPredictionForm" action="{{ url_for('predict') }}" method="POST">
+                    <!-- Section 1: Identification & History -->
+                    <div class="form-section-title">
+                        <span>1.</span> Identity & Usage History
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="brand">Brand / Manufacturer</label>
+                            <select name="brand" id="brand" class="form-control" required>
+                                {% for b in metadata.brands %}
+                                <option value="{{ b }}" {% if form_data and form_data.brand == b %}selected{% elif b == 'Maruti' %}selected{% endif %}>
+                                    {{ b }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="year">
+                                <span>Manufacturing Year</span>
+                                <span class="label-hint">1990 - 2026</span>
+                            </label>
+                            <input type="number" name="year" id="year" class="form-control" 
+                                   min="1990" max="2026" 
+                                   value="{{ form_data.year if form_data else '2019' }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="km_driven">
+                                <span>Total Odometer Reading</span>
+                                <span class="label-hint">in km</span>
+                            </label>
+                            <input type="number" name="km_driven" id="km_driven" class="form-control" 
+                                   min="0" max="1000000" step="500" 
+                                   value="{{ form_data.km_driven if form_data else '45000' }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="owner">Previous Ownership</label>
+                            <select name="owner" id="owner" class="form-control" required>
+                                {% for o in metadata.owner_types %}
+                                <option value="{{ o }}" {% if form_data and form_data.owner == o %}selected{% endif %}>
+                                    {{ o }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Technical Specifications -->
+                    <div class="form-section-title">
+                        <span>2.</span> Powertrain & Mechanical Specs
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="fuel">Fuel Type</label>
+                            <select name="fuel" id="fuel" class="form-control" required>
+                                {% for f in metadata.fuel_types %}
+                                <option value="{{ f }}" {% if form_data and form_data.fuel == f %}selected{% endif %}>
+                                    {{ f }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="transmission">Transmission</label>
+                            <select name="transmission" id="transmission" class="form-control" required>
+                                {% for t in metadata.transmission_types %}
+                                <option value="{{ t }}" {% if form_data and form_data.transmission == t %}selected{% endif %}>
+                                    {{ t }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="engine">
+                                <span>Engine Displacement</span>
+                                <span class="label-hint">in CC (e.g., 1197)</span>
+                            </label>
+                            <input type="number" name="engine" id="engine" class="form-control" 
+                                   min="600" max="6000" step="1" 
+                                   value="{{ form_data.engine if form_data else '1197' }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="max_power">
+                                <span>Max Engine Power</span>
+                                <span class="label-hint">in bhp (e.g., 83.0)</span>
+                            </label>
+                            <input type="number" name="max_power" id="max_power" class="form-control" 
+                                   min="30" max="600" step="0.1" 
+                                   value="{{ form_data.max_power if form_data else '83.0' }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="mileage">
+                                <span>Fuel Mileage</span>
+                                <span class="label-hint">kmpl or km/kg</span>
+                            </label>
+                            <input type="number" name="mileage" id="mileage" class="form-control" 
+                                   min="5" max="45" step="0.1" 
+                                   value="{{ form_data.mileage if form_data else '20.5' }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="seats">Seating Capacity</label>
+                            <select name="seats" id="seats" class="form-control" required>
+                                {% for s in metadata.seat_options %}
+                                <option value="{{ s }}" {% if form_data and form_data.seats == s|string %}selected{% elif s == 5 %}selected{% endif %}>
+                                    {{ s }} Seater
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Commercial & Channel -->
+                    <div class="form-section-title">
+                        <span>3.</span> Selling Channel
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label class="form-label" for="seller_type">Seller Channel</label>
+                            <select name="seller_type" id="seller_type" class="form-control" required>
+                                {% for st in metadata.seller_types %}
+                                <option value="{{ st }}" {% if form_data and form_data.seller_type == st %}selected{% endif %}>
+                                    {{ st }} ({{ 'Direct owner sale' if st == 'Individual' else 'Certified dealer network' if st == 'Trustmark Dealer' else 'Standard multi-brand dealer' }})
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <span class="spinner" id="btnSpinner"></span>
+                        <span id="btnText">Predict Selling Price</span>
+                        <span>⚡</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Column: Live Valuation Display -->
+            <div id="resultContainer">
+                {% if prediction %}
+                <div class="card result-card">
+                    <div class="card-header" style="margin-bottom: 0.75rem;">
+                        <div>
+                            <span class="badge-tag">Valuation Result</span>
+                            <div class="card-title" style="margin-top: 0.35rem;">
+                                {{ prediction.vehicle_summary.brand }} ({{ prediction.vehicle_summary.year }})
+                            </div>
+                        </div>
+                        <span class="badge-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">
+                            ✓ AI Model Verified
+                        </span>
+                    </div>
+
+                    <div class="valuation-display">
+                        <span class="valuation-tag">Estimated Resale Value</span>
+                        <div class="valuation-amount">{{ prediction.predicted_price }}</div>
+                        <div class="valuation-words">{{ prediction.predicted_denomination }}</div>
+                    </div>
+
+                    <div class="range-box">
+                        <div class="range-label">
+                            <span>Fair Market Confidence Band (±6%)</span>
+                            <span>Estimated Range</span>
+                        </div>
+                        <div class="range-meter-track">
+                            <div class="range-meter-fill"></div>
+                        </div>
+                        <div class="range-values">
+                            <span>{{ prediction.confidence_low }}</span>
+                            <span>{{ prediction.confidence_high }}</span>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 0.82rem; font-weight: 600; color: #34d399; margin-bottom: 0.5rem; text-transform: uppercase;">
+                        Evaluated Specifications:
+                    </div>
+                    <div class="recap-grid">
+                        <div class="recap-chip">
+                            <span class="recap-chip-title">KM Driven</span>
+                            <span class="recap-chip-value">{{ "{:,}".format(prediction.vehicle_summary.km_driven|int) }} km</span>
+                        </div>
+                        <div class="recap-chip">
+                            <span class="recap-chip-title">Fuel & Trans</span>
+                            <span class="recap-chip-value">{{ prediction.vehicle_summary.fuel }} • {{ prediction.vehicle_summary.transmission }}</span>
+                        </div>
+                        <div class="recap-chip">
+                            <span class="recap-chip-title">Ownership</span>
+                            <span class="recap-chip-value">{{ prediction.vehicle_summary.owner }}</span>
+                        </div>
+                        <div class="recap-chip">
+                            <span class="recap-chip-title">Seller Type</span>
+                            <span class="recap-chip-value">{{ prediction.vehicle_summary.seller_type }}</span>
+                        </div>
+                        <div class="recap-chip">
+                            <span class="recap-chip-title">Engine & Power</span>
+                            <span class="recap-chip-value">{{ prediction.vehicle_summary.engine }} CC • {{ prediction.vehicle_summary.max_power }} bhp</span>
+                        </div>
+                        <div class="recap-chip">
+                            <span class="recap-chip-title">Mileage & Seats</span>
+                            <span class="recap-chip-value">{{ prediction.vehicle_summary.mileage }} kmpl • {{ prediction.vehicle_summary.seats }} Seats</span>
+                        </div>
+                    </div>
+
+                    <div class="disclaimer-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <div>
+                            <strong>Academic Disclaimer:</strong> This estimated valuation is generated using a Random Forest machine learning model for educational and demonstration purposes. Real-world market values may fluctuate based on physical condition, service history, and local RTO taxes.
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card result-card">
+                    <div class="result-placeholder">
+                        <div class="placeholder-icon">🚘</div>
+                        <h3 class="placeholder-title">Awaiting Input Parameters</h3>
+                        <p class="placeholder-desc">
+                            Select a preset or customize the vehicle parameters on the left to compute the real-time AI market valuation in Indian Rupees (₹).
+                        </p>
+
+                        <div style="margin-top: 2rem; padding: 1rem; background: var(--bg-surface); border-radius: var(--radius-md); text-align: left; border: 1px solid var(--border-color);">
+                            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--accent-mint); font-weight: 700; margin-bottom: 0.4rem;">
+                                Active Pipeline Info
+                            </div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                • Model: <strong>RandomForestRegressor (120 Trees)</strong><br>
+                                • Preprocessing: <strong>StandardScaler + OneHotEncoder</strong><br>
+                                • Features: <strong>11 Inputs (6 Numeric, 5 Categorical)</strong><br>
+                                • Target: <strong>Selling Price in INR (₹)</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <strong>Used Car Price Prediction System</strong> — College Machine Learning Engineering Assignment<br>
+                Built with Python, Scikit-Learn, Flask & Modern Vanilla CSS.
+            </div>
+            <div class="footer-badge">
+                B.Tech Final Year Academic Project
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

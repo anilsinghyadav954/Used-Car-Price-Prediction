@@ -1,0 +1,602 @@
+{
+    "r2_score": 0.7511,
+    "train_r2_score": 0.9403,
+    "mae": 187289.63,
+    "rmse": 311948.35,
+    "mape": 36.75,
+    "total_samples": 3200,
+    "train_samples": 2560,
+    "test_samples": [
+        {
+            "brand": "Maruti",
+            "year": 2009,
+            "km_driven": 240000,
+            "fuel": "Petrol",
+            "seller_type": "Dealer",
+            "transmission": "Manual",
+            "owner": "Second Owner",
+            "mileage": 25.1,
+            "engine": 1119.0,
+            "max_power": 78.3,
+            "seats": 5.0,
+            "actual_price": 65000,
+            "predicted_price": 76813.91,
+            "error": -11813.91
+        },
+        {
+            "brand": "Hyundai",
+            "year": 2012,
+            "km_driven": 207000,
+            "fuel": "Petrol",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "Third Owner",
+            "mileage": 18.4,
+            "engine": 1384.0,
+            "max_power": 120.1,
+            "seats": 5.0,
+            "actual_price": 71000,
+            "predicted_price": 142474.31,
+            "error": -71474.31
+        },
+        {
+            "brand": "Volkswagen",
+            "year": 2024,
+            "km_driven": 24500,
+            "fuel": "Petrol",
+            "seller_type": "Individual",
+            "transmission": "Automatic",
+            "owner": "First Owner",
+            "mileage": 18.0,
+            "engine": 1066.0,
+            "max_power": 83.7,
+            "seats": 5.0,
+            "actual_price": 1125000,
+            "predicted_price": 1052006.96,
+            "error": 72993.04
+        },
+        {
+            "brand": "Hyundai",
+            "year": 2019,
+            "km_driven": 105500,
+            "fuel": "Petrol",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "Second Owner",
+            "mileage": 23.3,
+            "engine": 1009.0,
+            "max_power": 70.9,
+            "seats": 5.0,
+            "actual_price": 423000,
+            "predicted_price": 281796.29,
+            "error": 141203.71
+        },
+        {
+            "brand": "Tata",
+            "year": 2020,
+            "km_driven": 54500,
+            "fuel": "Petrol",
+            "seller_type": "Dealer",
+            "transmission": "Manual",
+            "owner": "Third Owner",
+            "mileage": 17.4,
+            "engine": 1621.0,
+            "max_power": 129.0,
+            "seats": 5.0,
+            "actual_price": 523000,
+            "predicted_price": 571401.59,
+            "error": -48401.59
+        },
+        {
+            "brand": "Honda",
+            "year": 2018,
+            "km_driven": 65500,
+            "fuel": "Petrol",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 26.0,
+            "engine": 1225.0,
+            "max_power": 86.9,
+            "seats": 5.0,
+            "actual_price": 449000,
+            "predicted_price": 343097.22,
+            "error": 105902.78
+        },
+        {
+            "brand": "Kia",
+            "year": 2017,
+            "km_driven": 125500,
+            "fuel": "Diesel",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "Second Owner",
+            "mileage": 19.2,
+            "engine": 1710.0,
+            "max_power": 140.3,
+            "seats": 7.0,
+            "actual_price": 403000,
+            "predicted_price": 372151.51,
+            "error": 30848.49
+        },
+        {
+            "brand": "Hyundai",
+            "year": 2013,
+            "km_driven": 174500,
+            "fuel": "Diesel",
+            "seller_type": "Dealer",
+            "transmission": "Manual",
+            "owner": "Third Owner",
+            "mileage": 21.0,
+            "engine": 1250.0,
+            "max_power": 103.1,
+            "seats": 5.0,
+            "actual_price": 164000,
+            "predicted_price": 198266.03,
+            "error": -34266.03
+        },
+        {
+            "brand": "Toyota",
+            "year": 2018,
+            "km_driven": 115000,
+            "fuel": "Petrol",
+            "seller_type": "Dealer",
+            "transmission": "Automatic",
+            "owner": "Second Owner",
+            "mileage": 17.5,
+            "engine": 1857.0,
+            "max_power": 134.7,
+            "seats": 7.0,
+            "actual_price": 733000,
+            "predicted_price": 740447.29,
+            "error": -7447.29
+        },
+        {
+            "brand": "Tata",
+            "year": 2010,
+            "km_driven": 240000,
+            "fuel": "Petrol",
+            "seller_type": "Dealer",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 17.1,
+            "engine": 1931.0,
+            "max_power": 162.2,
+            "seats": 5.0,
+            "actual_price": 175000,
+            "predicted_price": 138436.95,
+            "error": 36563.05
+        },
+        {
+            "brand": "Honda",
+            "year": 2024,
+            "km_driven": 19500,
+            "fuel": "Petrol",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 23.2,
+            "engine": 1376.0,
+            "max_power": 99.1,
+            "seats": 5.0,
+            "actual_price": 1075000,
+            "predicted_price": 909665.8,
+            "error": 165334.2
+        },
+        {
+            "brand": "Mahindra",
+            "year": 2017,
+            "km_driven": 139500,
+            "fuel": "Diesel",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "Second Owner",
+            "mileage": 20.4,
+            "engine": 1604.0,
+            "max_power": 90.2,
+            "seats": 5.0,
+            "actual_price": 497000,
+            "predicted_price": 409170.03,
+            "error": 87829.97
+        },
+        {
+            "brand": "Maruti",
+            "year": 2021,
+            "km_driven": 42500,
+            "fuel": "CNG",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "Second Owner",
+            "mileage": 26.4,
+            "engine": 1069.0,
+            "max_power": 68.9,
+            "seats": 5.0,
+            "actual_price": 200000,
+            "predicted_price": 393277.03,
+            "error": -193277.03
+        },
+        {
+            "brand": "Renault",
+            "year": 2019,
+            "km_driven": 58500,
+            "fuel": "Petrol",
+            "seller_type": "Trustmark Dealer",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 18.7,
+            "engine": 1313.0,
+            "max_power": 95.8,
+            "seats": 7.0,
+            "actual_price": 372000,
+            "predicted_price": 284789.64,
+            "error": 87210.36
+        },
+        {
+            "brand": "Tata",
+            "year": 2023,
+            "km_driven": 18000,
+            "fuel": "CNG",
+            "seller_type": "Trustmark Dealer",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 22.1,
+            "engine": 1431.0,
+            "max_power": 105.5,
+            "seats": 5.0,
+            "actual_price": 948000,
+            "predicted_price": 931013.48,
+            "error": 16986.52
+        },
+        {
+            "brand": "Mahindra",
+            "year": 2021,
+            "km_driven": 55500,
+            "fuel": "Petrol",
+            "seller_type": "Individual",
+            "transmission": "Automatic",
+            "owner": "Third Owner",
+            "mileage": 17.2,
+            "engine": 1842.0,
+            "max_power": 134.5,
+            "seats": 7.0,
+            "actual_price": 879000,
+            "predicted_price": 655017.16,
+            "error": 223982.84
+        },
+        {
+            "brand": "Ford",
+            "year": 2016,
+            "km_driven": 149500,
+            "fuel": "Petrol",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "Second Owner",
+            "mileage": 16.5,
+            "engine": 1874.0,
+            "max_power": 160.1,
+            "seats": 5.0,
+            "actual_price": 155000,
+            "predicted_price": 356924.46,
+            "error": -201924.46
+        },
+        {
+            "brand": "Hyundai",
+            "year": 2021,
+            "km_driven": 71000,
+            "fuel": "Diesel",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "Second Owner",
+            "mileage": 22.6,
+            "engine": 1222.0,
+            "max_power": 103.0,
+            "seats": 5.0,
+            "actual_price": 616000,
+            "predicted_price": 558401.92,
+            "error": 57598.08
+        },
+        {
+            "brand": "Renault",
+            "year": 2016,
+            "km_driven": 142500,
+            "fuel": "Petrol",
+            "seller_type": "Trustmark Dealer",
+            "transmission": "Manual",
+            "owner": "Second Owner",
+            "mileage": 18.3,
+            "engine": 1285.0,
+            "max_power": 91.7,
+            "seats": 5.0,
+            "actual_price": 117000,
+            "predicted_price": 168379.66,
+            "error": -51379.66
+        },
+        {
+            "brand": "Toyota",
+            "year": 2018,
+            "km_driven": 79500,
+            "fuel": "Diesel",
+            "seller_type": "Dealer",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 17.9,
+            "engine": 1883.0,
+            "max_power": 129.2,
+            "seats": 7.0,
+            "actual_price": 1086000,
+            "predicted_price": 990838.55,
+            "error": 95161.45
+        },
+        {
+            "brand": "Skoda",
+            "year": 2019,
+            "km_driven": 73000,
+            "fuel": "Petrol",
+            "seller_type": "Trustmark Dealer",
+            "transmission": "Automatic",
+            "owner": "Fourth & Above Owner",
+            "mileage": 15.4,
+            "engine": 1848.0,
+            "max_power": 174.8,
+            "seats": 5.0,
+            "actual_price": 681000,
+            "predicted_price": 575653.85,
+            "error": 105346.15
+        },
+        {
+            "brand": "Toyota",
+            "year": 2023,
+            "km_driven": 25000,
+            "fuel": "Diesel",
+            "seller_type": "Individual",
+            "transmission": "Automatic",
+            "owner": "First Owner",
+            "mileage": 12.6,
+            "engine": 2631.0,
+            "max_power": 190.6,
+            "seats": 5.0,
+            "actual_price": 2551000,
+            "predicted_price": 1886383.08,
+            "error": 664616.92
+        },
+        {
+            "brand": "Maruti",
+            "year": 2010,
+            "km_driven": 240000,
+            "fuel": "CNG",
+            "seller_type": "Dealer",
+            "transmission": "Automatic",
+            "owner": "Fourth & Above Owner",
+            "mileage": 27.7,
+            "engine": 988.0,
+            "max_power": 62.0,
+            "seats": 5.0,
+            "actual_price": 65000,
+            "predicted_price": 79975.84,
+            "error": -14975.84
+        },
+        {
+            "brand": "Hyundai",
+            "year": 2022,
+            "km_driven": 58500,
+            "fuel": "Petrol",
+            "seller_type": "Trustmark Dealer",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 20.0,
+            "engine": 1177.0,
+            "max_power": 96.0,
+            "seats": 5.0,
+            "actual_price": 759000,
+            "predicted_price": 682029.6,
+            "error": 76970.4
+        },
+        {
+            "brand": "Hyundai",
+            "year": 2020,
+            "km_driven": 96500,
+            "fuel": "Diesel",
+            "seller_type": "Trustmark Dealer",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 16.8,
+            "engine": 1375.0,
+            "max_power": 116.7,
+            "seats": 5.0,
+            "actual_price": 420000,
+            "predicted_price": 498820.14,
+            "error": -78820.14
+        },
+        {
+            "brand": "Maruti",
+            "year": 2023,
+            "km_driven": 50500,
+            "fuel": "Diesel",
+            "seller_type": "Individual",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 21.0,
+            "engine": 1311.0,
+            "max_power": 90.0,
+            "seats": 5.0,
+            "actual_price": 700000,
+            "predicted_price": 512338.98,
+            "error": 187661.02
+        },
+        {
+            "brand": "Tata",
+            "year": 2020,
+            "km_driven": 59500,
+            "fuel": "Petrol",
+            "seller_type": "Dealer",
+            "transmission": "Manual",
+            "owner": "Second Owner",
+            "mileage": 20.4,
+            "engine": 1595.0,
+            "max_power": 133.7,
+            "seats": 5.0,
+            "actual_price": 469000,
+            "predicted_price": 636063.49,
+            "error": -167063.49
+        },
+        {
+            "brand": "Maruti",
+            "year": 2014,
+            "km_driven": 103000,
+            "fuel": "Petrol",
+            "seller_type": "Trustmark Dealer",
+            "transmission": "Manual",
+            "owner": "Third Owner",
+            "mileage": 22.8,
+            "engine": 1141.0,
+            "max_power": 77.8,
+            "seats": 5.0,
+            "actual_price": 92000,
+            "predicted_price": 113572.49,
+            "error": -21572.49
+        },
+        {
+            "brand": "Toyota",
+            "year": 2020,
+            "km_driven": 67000,
+            "fuel": "Petrol",
+            "seller_type": "Individual",
+            "transmission": "Automatic",
+            "owner": "Second Owner",
+            "mileage": 21.1,
+            "engine": 1515.0,
+            "max_power": 106.6,
+            "seats": 5.0,
+            "actual_price": 464000,
+            "predicted_price": 1285301.49,
+            "error": -821301.49
+        },
+        {
+            "brand": "Tata",
+            "year": 2020,
+            "km_driven": 47000,
+            "fuel": "Petrol",
+            "seller_type": "Trustmark Dealer",
+            "transmission": "Manual",
+            "owner": "First Owner",
+            "mileage": 14.2,
+            "engine": 1865.0,
+            "max_power": 160.9,
+            "seats": 5.0,
+            "actual_price": 458000,
+            "predicted_price": 728227.27,
+            "error": -270227.27
+        }
+    ],
+    "algorithm": "RandomForestRegressor",
+    "n_estimators": 120,
+    "random_state": 42,
+    "feature_importances": [
+        {
+            "feature": "max",
+            "importance": 0.3361
+        },
+        {
+            "feature": "year",
+            "importance": 0.2942
+        },
+        {
+            "feature": "brand",
+            "importance": 0.1286
+        },
+        {
+            "feature": "km",
+            "importance": 0.1271
+        },
+        {
+            "feature": "engine",
+            "importance": 0.0465
+        },
+        {
+            "feature": "mileage",
+            "importance": 0.027
+        },
+        {
+            "feature": "owner",
+            "importance": 0.0117
+        },
+        {
+            "feature": "seller",
+            "importance": 0.0103
+        },
+        {
+            "feature": "fuel",
+            "importance": 0.0082
+        },
+        {
+            "feature": "transmission",
+            "importance": 0.0054
+        },
+        {
+            "feature": "seats",
+            "importance": 0.0048
+        }
+    ],
+    "detailed_importances": [
+        {
+            "feature": "max_power",
+            "importance": 0.3361
+        },
+        {
+            "feature": "year",
+            "importance": 0.2942
+        },
+        {
+            "feature": "km_driven",
+            "importance": 0.1271
+        },
+        {
+            "feature": "brand_Toyota",
+            "importance": 0.0784
+        },
+        {
+            "feature": "engine",
+            "importance": 0.0465
+        },
+        {
+            "feature": "mileage",
+            "importance": 0.027
+        },
+        {
+            "feature": "brand_Kia",
+            "importance": 0.0138
+        },
+        {
+            "feature": "brand_Maruti",
+            "importance": 0.0102
+        },
+        {
+            "feature": "brand_BMW",
+            "importance": 0.0079
+        },
+        {
+            "feature": "owner_First Owner",
+            "importance": 0.0066
+        },
+        {
+            "feature": "seller_type_Dealer",
+            "importance": 0.0049
+        },
+        {
+            "feature": "seats",
+            "importance": 0.0048
+        },
+        {
+            "feature": "brand_Renault",
+            "importance": 0.0045
+        },
+        {
+            "feature": "fuel_Diesel",
+            "importance": 0.0045
+        },
+        {
+            "feature": "seller_type_Individual",
+            "importance": 0.0042
+        }
+    ]
+}
